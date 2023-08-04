@@ -4,7 +4,7 @@ __pycache__/
 *$py.class
 
 # cdk
-.cdk.out
+cdk.out
 
 # mac
 .DS_Store
