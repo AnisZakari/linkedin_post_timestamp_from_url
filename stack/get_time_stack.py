@@ -17,17 +17,17 @@ class LinkedinTime(Stack):
             architecture=_lambda.Architecture.X86_64,
         )
 
-        # Define the REST API Gateway with Lambda proxy integration
-        api = apigw.LambdaRestApi(self, "linkedin_get_time", handler=lambda_, proxy=True)
+        # Define the REST API Gateway
+        api = apigw.RestApi(self, "linkedin_get_time")
+
+        # Define the Lambda integration
+        integration = apigw.LambdaIntegration(lambda_)
 
         # Define a resource for the API
         resource = api.root.add_resource("resource")
 
-        # Add a POST method to the resource
-        resource.add_method("POST", apigw.LambdaIntegration(lambda_))
-
-        # Define an API key
-        api_key = api.add_api_key("ApiKey")
+        # Add a POST method to the resource with the Lambda integration
+        resource.add_method("POST", integration)
 
         # Define a usage plan
         # Define a usage plan

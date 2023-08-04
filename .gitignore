@@ -3,6 +3,9 @@ __pycache__/
 *.py[cod]
 *$py.class
 
+# cdk
+.cdk.out
+
 # C extensions
 *.so
 
