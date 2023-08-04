@@ -9,6 +9,41 @@ import pytz
 logger = logging.getLogger(__name__)
 
 
+def lambda_handler(event, context):
+    try:
+        # Check if linkedin_url is directly available in the event object
+        if "linkedin_url" in event:
+            linkedin_url = event["linkedin_url"]
+        else:
+            # Parse the body from the event object
+            body = json.loads(event["body"])
+
+            # Get the linkedin_url from the body
+            linkedin_url = body["linkedin_url"]
+
+        logger.info(f"Received LinkedIn URL: {linkedin_url}")
+
+        date = get_date(linkedin_url)
+
+        return generate_response(200, "text/plain", date)
+
+    except KeyError:
+        logger.error('The "linkedin_url" parameter was not found in the event object or the body of the event object')
+        return generate_response(
+            400,
+            "application/json",
+            json.dumps(
+                {
+                    "message": 'The "linkedin_url" parameter was not found in the event object or the body of the event object'
+                }
+            ),
+        )
+
+    except Exception as e:
+        logger.error(f"An unexpected error occurred: {e}")
+        return generate_response(500, "application/json", json.dumps({"message": f"An unexpected error occurred: {e}"}))
+
+
 def get_post_id(linkedin_url):
     regex = re.compile(r"([0-9]{19})")
     match = regex.search(linkedin_url)
@@ -42,39 +77,12 @@ def get_date(linkedin_url):
     return human_date_format
 
 
-def lambda_handler(event, context):
-    try:
-        # Check if linkedin_url is directly available in the event object
-        if "linkedin_url" in event:
-            linkedin_url = event["linkedin_url"]
-        else:
-            # Parse the body from the event object
-            body = json.loads(event["body"])
-
-            # Get the linkedin_url from the body
-            linkedin_url = body["linkedin_url"]
-
-        logger.info(f"Received LinkedIn URL: {linkedin_url}")
-
-        date = get_date(linkedin_url)
-
-        return {"statusCode": 200, "headers": {"Content-Type": "text/plain"}, "body": date}
-
-    except KeyError:
-        logger.error('The "linkedin_url" parameter was not found in the event object or the body of the event object')
-        return {
-            "statusCode": 400,
-            "headers": {"Content-Type": "application/json"},
-            "body": json.dumps(
-                {
-                    "message": 'The "linkedin_url" parameter was not found in the event object or the body of the event object'
-                }
-            ),
-        }
-    except Exception as e:
-        logger.error(f"An unexpected error occurred: {e}")
-        return {
-            "statusCode": 500,
-            "headers": {"Content-Type": "application/json"},
-            "body": json.dumps({"message": f"An unexpected error occurred: {e}"}),
-        }
+def generate_response(status_code, content_type, body):
+    return {
+        "statusCode": status_code,
+        "headers": {
+            "Content-Type": "application/json",  # Always return JSON
+            "Access-Control-Allow-Origin": "*",
+        },
+        "body": json.dumps({"data": body}),  # Wrap the body in a JSON object
+    }

@@ -18,7 +18,15 @@ class LinkedinTime(Stack):
         )
 
         # Define the REST API Gateway
-        api = apigw.RestApi(self, "linkedin_get_time")
+        api = apigw.RestApi(
+            self,
+            "linkedin_get_time",
+            default_cors_preflight_options=apigw.CorsOptions(
+                allow_origins=apigw.Cors.ALL_ORIGINS,
+                allow_methods=apigw.Cors.ALL_METHODS,
+                allow_headers=apigw.Cors.DEFAULT_HEADERS,
+            ),
+        )
 
         # Define the Lambda integration
         integration = apigw.LambdaIntegration(lambda_)
