@@ -12,13 +12,21 @@ The function is deployed using AWS CDK. The deployment script creates a Docker-b
 
 The deployment script is written in Python and uses the AWS CDK Python bindings. The Lambda function itself is also written in Python.
 
+### Deployment Steps
+
+1. Clone this repository to your local machine.
+2. Navigate to the project directory.
+3. Install the required dependencies with `pip install -r requirements.txt`.
+4. Ensure you have the AWS CDK installed. If not, you can install it with `npm install -g aws-cdk`.
+5. Deploy the stack with `cdk deploy`.
+
 ## Usage
 
 Once deployed, you can call the API Gateway endpoint with a POST request. The body of the request should be a JSON object with a `linkedin_url` key, like this:
 
 ```json
 {
-  "linkedin_url": "https://www.linkedin.com/posts/alliekmiller_goodbye-mouse-clicks-othersideai-hyperwrite-ugcPost-7093310227491500032-TQ81?utm_source=share&utm_medium=member_desktop"
+  "linkedin_url": "https://www.linkedin.com/feed/update/urn:li:activity:7092562497743773696?updateEntityUrn=urn%3Ali%3Afs_feedUpdate%3A%28V2%2Curn%3Ali%3Aactivity%3A7092562497743773696%29"
 }
 ```
 
