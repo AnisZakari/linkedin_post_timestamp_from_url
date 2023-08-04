@@ -6,6 +6,9 @@ __pycache__/
 # cdk
 .cdk.out
 
+# mac
+.DS_Store
+
 # C extensions
 *.so
 
