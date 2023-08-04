@@ -1,0 +1,33 @@
+{
+  "version": "32.0.0",
+  "files": {
+    "385df4f0b4991e552c518dac6ef3700c466cfdc61b294ee4e9e4240546dd4cd4": {
+      "source": {
+        "path": "LinkedinTimeApp.template.json",
+        "packaging": "file"
+      },
+      "destinations": {
+        "current_account-current_region": {
+          "bucketName": "cdk-hnb659fds-assets-${AWS::AccountId}-${AWS::Region}",
+          "objectKey": "385df4f0b4991e552c518dac6ef3700c466cfdc61b294ee4e9e4240546dd4cd4.json",
+          "assumeRoleArn": "arn:${AWS::Partition}:iam::${AWS::AccountId}:role/cdk-hnb659fds-file-publishing-role-${AWS::AccountId}-${AWS::Region}"
+        }
+      }
+    }
+  },
+  "dockerImages": {
+    "391645ea8f51cab3b15f3712e01562bedaf290e06ce773ee8b7e2f8c9b9b9135": {
+      "source": {
+        "directory": "asset.391645ea8f51cab3b15f3712e01562bedaf290e06ce773ee8b7e2f8c9b9b9135",
+        "platform": "linux/amd64"
+      },
+      "destinations": {
+        "current_account-current_region": {
+          "repositoryName": "cdk-hnb659fds-container-assets-${AWS::AccountId}-${AWS::Region}",
+          "imageTag": "391645ea8f51cab3b15f3712e01562bedaf290e06ce773ee8b7e2f8c9b9b9135",
+          "assumeRoleArn": "arn:${AWS::Partition}:iam::${AWS::AccountId}:role/cdk-hnb659fds-image-publishing-role-${AWS::AccountId}-${AWS::Region}"
+        }
+      }
+    }
+  }
+}
